@@ -10,8 +10,8 @@
       margin: 0;
       font-family: "Poppins", sans-serif;
       background: linear-gradient(to bottom right, #ffd6e8, #fff6fb);
-      overflow-x: hidden;
       text-align: center;
+      overflow-x: hidden;
     }
 
     /* Screens */
@@ -61,13 +61,15 @@
       box-shadow: 0 12px 25px rgba(0,0,0,0.25);
       margin-top: 20px;
       position: relative;
+      background: black;
     }
 
     .montage img {
       position: absolute;
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
+      background: black;
       opacity: 0;
       transition: opacity 1.5s ease-in-out;
     }
@@ -132,12 +134,16 @@
     <div class="envelope" onclick="startExperience()">
       <div class="flap"></div>
     </div>
+
+    <p style="margin-top:20px; font-size:14px;">
+      (Music starts after click 🎶)
+    </p>
   </div>
 
   <!-- Screen 2: Fade Montage -->
   <div class="screen" id="screen2">
-    <h1>Just like a movie 🎶</h1>
-    <p>Some moments with you...</p>
+    <h1>Little moments with you 💖</h1>
+    <p>My favourite memories…</p>
 
     <div class="montage">
       <img src="pic1.jpg" class="activePic">
@@ -164,11 +170,10 @@
     </div>
   </div>
 
-  <!-- Screen 3: Invitation + Valentine Question -->
+  <!-- Screen 3: Invitation + Question -->
   <div class="screen" id="screen3">
     <h1>One last thing 💖</h1>
 
-    <!-- Your invitation card -->
     <img src="card.png" class="card-img">
 
     <h2>Akshata… will you be my Valentine? 🌹</h2>
@@ -189,16 +194,22 @@
     let pics;
 
     function startExperience() {
-      // Start music
-      document.getElementById("bgMusic").play();
 
-      // Switch to montage
+      // Music play fix
+      let music = document.getElementById("bgMusic");
+      music.volume = 0.8;
+
+      music.play().catch(() => {
+        alert("Tap once to start music 🎶");
+      });
+
+      // Switch screens
       document.getElementById("screen1").classList.remove("active");
       document.getElementById("screen2").classList.add("active");
 
       pics = document.querySelectorAll(".montage img");
 
-      // Fade pics one by one
+      // Fade montage
       let interval = setInterval(() => {
         pics[currentPic].classList.remove("activePic");
         currentPic++;
@@ -206,7 +217,7 @@
         if (currentPic >= pics.length) {
           clearInterval(interval);
 
-          // After montage → show final card
+          // Show final card
           setTimeout(() => {
             document.getElementById("screen2").classList.remove("active");
             document.getElementById("screen3").classList.add("active");
@@ -217,7 +228,7 @@
 
         pics[currentPic].classList.add("activePic");
 
-      }, 2500); // each pic stays 2.5s
+      }, 2500);
     }
 
     // No button runs away
@@ -254,3 +265,4 @@
 
 </body>
 </html>
+
