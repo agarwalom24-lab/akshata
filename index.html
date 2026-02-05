@@ -14,6 +14,7 @@
       overflow-x: hidden;
     }
 
+    /* Screens */
     .screen {
       display: none;
       min-height: 100vh;
@@ -50,7 +51,7 @@
       clip-path: polygon(0 0, 50% 55%, 100% 0, 100% 100%, 0 100%);
     }
 
-    /* Single Picture Display */
+    /* Montage Box */
     .montage {
       width: 90%;
       max-width: 420px;
@@ -60,26 +61,16 @@
       box-shadow: 0 12px 25px rgba(0,0,0,0.25);
       margin-top: 20px;
       background: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
     }
 
     .montage img {
       width: 100%;
       height: 100%;
-      object-fit: cover;   /* FULL BOX */
+      object-fit: cover;
       object-position: center;
     }
 
-    /* Card */
-    .card-img {
-      width: 340px;
-      border-radius: 20px;
-      box-shadow: 0 12px 25px rgba(0,0,0,0.25);
-      margin: 20px 0;
-    }
-
+    /* Buttons */
     button {
       padding: 12px 22px;
       border: none;
@@ -99,12 +90,45 @@
       color: white;
       position: absolute;
     }
+
+    /* Hidden Card Popup */
+    .cardPopup {
+      display: none;
+      margin-top: 25px;
+      animation: pop 0.6s ease;
+    }
+
+    .cardPopup img {
+      width: 340px;
+      border-radius: 20px;
+      box-shadow: 0 12px 25px rgba(0,0,0,0.25);
+    }
+
+    @keyframes pop {
+      from {transform: scale(0.5); opacity: 0;}
+      to {transform: scale(1); opacity: 1;}
+    }
+
+    /* Confetti */
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      top: -10px;
+      animation: fall 3s linear forwards;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh) rotate(720deg);
+      }
+    }
   </style>
 </head>
 
 <body>
 
-  <!-- Screen 1 -->
+  <!-- Screen 1: Envelope -->
   <div class="screen active" id="screen1">
     <h1>Hi Akshata 💌</h1>
     <p>Click the envelope…</p>
@@ -114,58 +138,84 @@
     </div>
   </div>
 
-  <!-- Screen 2 -->
+  <!-- Screen 2: Montage -->
   <div class="screen" id="screen2">
     <h1>A little moment 💖</h1>
-    <p>Just one picture for now…</p>
 
     <div class="montage">
-      <!-- ONLY ONE PIC -->
       <img src="pic1.jpg">
     </div>
   </div>
 
-  <!-- Screen 3 -->
+  <!-- Screen 3: Valentine Question -->
   <div class="screen" id="screen3">
-    <h1>One last thing 💖</h1>
+    <h1>Akshata… 💖</h1>
+    <h2>Will you be my Valentine? 🌹</h2>
 
-    <img src="card.png" class="card-img">
-
-    <h2>Akshata… will you be my Valentine? 🌹</h2>
-
-    <button id="yesBtn">YES 💘</button>
+    <button id="yesBtn" onclick="yesClick()">YES 💘</button>
     <button id="noBtn" onmouseover="moveNo()">NO 😭</button>
+
+    <!-- Card Popup -->
+    <div class="cardPopup" id="cardPopup">
+      <h2>YAYYYYY 🎉</h2>
+      <img src="card.png">
+      <p>See you soon, Valentine 💌</p>
+    </div>
   </div>
 
-  <!-- Music -->
+  <!-- Background Music -->
   <audio id="bgMusic">
     <source src="song.mp3" type="audio/mpeg">
   </audio>
 
   <script>
     function startExperience() {
+
+      // Start Music
       let music = document.getElementById("bgMusic");
+      music.volume = 0.8;
+
       music.play().catch(() => {
         alert("Tap once to start music 🎶");
       });
 
-      // Show pic screen
+      // Envelope → Montage
       document.getElementById("screen1").classList.remove("active");
       document.getElementById("screen2").classList.add("active");
 
-      // After 4 sec → show card screen
+      // Montage lasts 4 seconds → Question page
       setTimeout(() => {
         document.getElementById("screen2").classList.remove("active");
         document.getElementById("screen3").classList.add("active");
       }, 4000);
     }
 
+    // No button dodges
     function moveNo() {
       const noBtn = document.getElementById("noBtn");
       const x = Math.random() * (window.innerWidth - 120);
       const y = Math.random() * (window.innerHeight - 80);
       noBtn.style.left = x + "px";
       noBtn.style.top = y + "px";
+    }
+
+    // Yes button → Confetti + Card Popup
+    function yesClick() {
+      document.getElementById("cardPopup").style.display = "block";
+      confettiBoom();
+    }
+
+    function confettiBoom() {
+      for (let i = 0; i < 90; i++) {
+        let conf = document.createElement("div");
+        conf.classList.add("confetti");
+        conf.style.left = Math.random() * window.innerWidth + "px";
+        conf.style.background = `hsl(${Math.random()*360},100%,50%)`;
+        conf.style.animationDuration = (Math.random() * 2 + 2) + "s";
+        document.body.appendChild(conf);
+
+        setTimeout(() => conf.remove(), 3000);
+      }
     }
   </script>
 
