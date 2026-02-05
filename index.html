@@ -14,7 +14,6 @@
       overflow-x: hidden;
     }
 
-    /* Screens */
     .screen {
       display: none;
       min-height: 100vh;
@@ -51,7 +50,7 @@
       clip-path: polygon(0 0, 50% 55%, 100% 0, 100% 100%, 0 100%);
     }
 
-    /* Fade Montage */
+    /* Single Picture Display */
     .montage {
       width: 90%;
       max-width: 420px;
@@ -60,25 +59,20 @@
       overflow: hidden;
       box-shadow: 0 12px 25px rgba(0,0,0,0.25);
       margin-top: 20px;
-      position: relative;
-      background: black;
+      background: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .montage img {
-      position: absolute;
       width: 100%;
       height: 100%;
-      object-fit: contain;
-      background: black;
-      opacity: 0;
-      transition: opacity 1.5s ease-in-out;
+      object-fit: cover;   /* FULL BOX */
+      object-position: center;
     }
 
-    .montage img.activePic {
-      opacity: 1;
-    }
-
-    /* Invitation Card */
+    /* Card */
     .card-img {
       width: 340px;
       border-radius: 20px;
@@ -86,7 +80,6 @@
       margin: 20px 0;
     }
 
-    /* Buttons */
     button {
       padding: 12px 22px;
       border: none;
@@ -106,27 +99,12 @@
       color: white;
       position: absolute;
     }
-
-    /* Confetti */
-    .confetti {
-      position: fixed;
-      width: 10px;
-      height: 10px;
-      top: -10px;
-      animation: fall 3s linear forwards;
-    }
-
-    @keyframes fall {
-      to {
-        transform: translateY(100vh) rotate(720deg);
-      }
-    }
   </style>
 </head>
 
 <body>
 
-  <!-- Screen 1: Envelope -->
+  <!-- Screen 1 -->
   <div class="screen active" id="screen1">
     <h1>Hi Akshata 💌</h1>
     <p>Click the envelope…</p>
@@ -134,43 +112,20 @@
     <div class="envelope" onclick="startExperience()">
       <div class="flap"></div>
     </div>
-
-    <p style="margin-top:20px; font-size:14px;">
-      (Music starts after click 🎶)
-    </p>
   </div>
 
-  <!-- Screen 2: Fade Montage -->
+  <!-- Screen 2 -->
   <div class="screen" id="screen2">
-    <h1>Little moments with you 💖</h1>
-    <p>My favourite memories…</p>
+    <h1>A little moment 💖</h1>
+    <p>Just one picture for now…</p>
 
     <div class="montage">
-      <img src="pic1.jpg" class="activePic">
-      <img src="pic2.jpg">
-      <img src="pic3.jpg">
-      <img src="pic4.jpg">
-      <img src="pic5.jpg">
-      <img src="pic6.jpg">
-      <img src="pic7.jpg">
-      <img src="pic8.jpg">
-      <img src="pic9.jpg">
-      <img src="pic10.jpg">
-
-      <img src="pic11.jpg">
-      <img src="pic12.jpg">
-      <img src="pic13.jpg">
-      <img src="pic14.jpg">
-      <img src="pic15.jpg">
-      <img src="pic16.jpg">
-      <img src="pic17.jpg">
-      <img src="pic18.jpg">
-      <img src="pic19.jpg">
-      <img src="pic20.jpg">
+      <!-- ONLY ONE PIC -->
+      <img src="pic1.jpg">
     </div>
   </div>
 
-  <!-- Screen 3: Invitation + Question -->
+  <!-- Screen 3 -->
   <div class="screen" id="screen3">
     <h1>One last thing 💖</h1>
 
@@ -178,60 +133,33 @@
 
     <h2>Akshata… will you be my Valentine? 🌹</h2>
 
-    <button id="yesBtn" onclick="yesClick()">YES 💘</button>
+    <button id="yesBtn">YES 💘</button>
     <button id="noBtn" onmouseover="moveNo()">NO 😭</button>
-
-    <h2 id="finalMsg"></h2>
   </div>
 
-  <!-- Background Music -->
+  <!-- Music -->
   <audio id="bgMusic">
     <source src="song.mp3" type="audio/mpeg">
   </audio>
 
   <script>
-    let currentPic = 0;
-    let pics;
-
     function startExperience() {
-
-      // Music play fix
       let music = document.getElementById("bgMusic");
-      music.volume = 0.8;
-
       music.play().catch(() => {
         alert("Tap once to start music 🎶");
       });
 
-      // Switch screens
+      // Show pic screen
       document.getElementById("screen1").classList.remove("active");
       document.getElementById("screen2").classList.add("active");
 
-      pics = document.querySelectorAll(".montage img");
-
-      // Fade montage
-      let interval = setInterval(() => {
-        pics[currentPic].classList.remove("activePic");
-        currentPic++;
-
-        if (currentPic >= pics.length) {
-          clearInterval(interval);
-
-          // Show final card
-          setTimeout(() => {
-            document.getElementById("screen2").classList.remove("active");
-            document.getElementById("screen3").classList.add("active");
-          }, 1200);
-
-          return;
-        }
-
-        pics[currentPic].classList.add("activePic");
-
-      }, 2500);
+      // After 4 sec → show card screen
+      setTimeout(() => {
+        document.getElementById("screen2").classList.remove("active");
+        document.getElementById("screen3").classList.add("active");
+      }, 4000);
     }
 
-    // No button runs away
     function moveNo() {
       const noBtn = document.getElementById("noBtn");
       const x = Math.random() * (window.innerWidth - 120);
@@ -239,30 +167,7 @@
       noBtn.style.left = x + "px";
       noBtn.style.top = y + "px";
     }
-
-    // Yes click
-    function yesClick() {
-      document.getElementById("finalMsg").innerText =
-        "YAYYYYY 🎉 See you soon, Valentine 💖";
-
-      confettiBoom();
-    }
-
-    // Confetti effect
-    function confettiBoom() {
-      for (let i = 0; i < 90; i++) {
-        let conf = document.createElement("div");
-        conf.classList.add("confetti");
-        conf.style.left = Math.random() * window.innerWidth + "px";
-        conf.style.background = `hsl(${Math.random()*360},100%,50%)`;
-        conf.style.animationDuration = (Math.random() * 2 + 2) + "s";
-        document.body.appendChild(conf);
-
-        setTimeout(() => conf.remove(), 3000);
-      }
-    }
   </script>
 
 </body>
 </html>
-
