@@ -14,7 +14,6 @@
       overflow-x: hidden;
     }
 
-    /* Screens */
     .screen {
       display: none;
       min-height: 100vh;
@@ -51,23 +50,20 @@
       clip-path: polygon(0 0, 50% 55%, 100% 0, 100% 100%, 0 100%);
     }
 
-    /* Montage Box */
-    .montage {
+    /* Video Box */
+    .videoBox {
       width: 90%;
       max-width: 420px;
-      height: 520px;
       border-radius: 25px;
       overflow: hidden;
       box-shadow: 0 12px 25px rgba(0,0,0,0.25);
       margin-top: 20px;
-      background: white;
     }
 
-    .montage img {
+    video {
       width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
+      height: auto;
+      display: block;
     }
 
     /* Buttons */
@@ -91,7 +87,7 @@
       position: absolute;
     }
 
-    /* Hidden Card Popup */
+    /* Card Popup */
     .cardPopup {
       display: none;
       margin-top: 25px;
@@ -138,12 +134,14 @@
     </div>
   </div>
 
-  <!-- Screen 2: Montage -->
+  <!-- Screen 2: Video Montage -->
   <div class="screen" id="screen2">
-    <h1>A little moment 💖</h1>
+    <h1>A little movie for you 💖</h1>
 
-    <div class="montage">
-      <img src="pic1.jpg">
+    <div class="videoBox">
+      <video id="montageVideo">
+        <source src="video.mp4" type="video/mp4">
+      </video>
     </div>
   </div>
 
@@ -155,7 +153,6 @@
     <button id="yesBtn" onclick="yesClick()">YES 💘</button>
     <button id="noBtn" onmouseover="moveNo()">NO 😭</button>
 
-    <!-- Card Popup -->
     <div class="cardPopup" id="cardPopup">
       <h2>YAYYYYY 🎉</h2>
       <img src="card.png">
@@ -171,23 +168,26 @@
   <script>
     function startExperience() {
 
-      // Start Music
+      // Start music
       let music = document.getElementById("bgMusic");
       music.volume = 0.8;
-
       music.play().catch(() => {
         alert("Tap once to start music 🎶");
       });
 
-      // Envelope → Montage
+      // Switch to video screen
       document.getElementById("screen1").classList.remove("active");
       document.getElementById("screen2").classList.add("active");
 
-      // Montage lasts 4 seconds → Question page
-      setTimeout(() => {
+      // Play video
+      let video = document.getElementById("montageVideo");
+      video.play();
+
+      // After video ends → show Valentine question
+      video.onended = () => {
         document.getElementById("screen2").classList.remove("active");
         document.getElementById("screen3").classList.add("active");
-      }, 4000);
+      };
     }
 
     // No button dodges
@@ -199,7 +199,7 @@
       noBtn.style.top = y + "px";
     }
 
-    // Yes button → Confetti + Card Popup
+    // Yes click → Card + Confetti
     function yesClick() {
       document.getElementById("cardPopup").style.display = "block";
       confettiBoom();
