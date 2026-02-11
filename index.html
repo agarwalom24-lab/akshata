@@ -14,10 +14,27 @@
     body {
       margin: 0;
       font-family: "Inter", sans-serif;
-      background: radial-gradient(circle at top, #12121a, #050508);
-      color: white;
+
+      /* ✨ Softer romantic background */
+      background: radial-gradient(circle at top, #fff0f6, #fbe7ff, #fff);
+      color: #222;
+
       overflow: hidden;
       text-align: center;
+    }
+
+    /* 💖 Floating hearts (slow + subtle) */
+    .heart {
+      position: absolute;
+      bottom: -20px;
+      font-size: 18px;
+      opacity: 0.25;
+      animation: floatUp 18s linear infinite;
+    }
+
+    @keyframes floatUp {
+      from { transform: translateY(0); }
+      to   { transform: translateY(-120vh); }
     }
 
     /* Screens */
@@ -41,12 +58,12 @@
       font-family: "Playfair Display", serif;
       font-size: 2.6rem;
       margin: 0;
-      letter-spacing: 0.5px;
+      color: #ff2f6d;
     }
 
     p {
       margin-top: 14px;
-      opacity: 0.7;
+      opacity: 0.75;
       font-weight: 300;
       font-size: 1rem;
       max-width: 650px;
@@ -60,19 +77,20 @@
       border-radius: 24px;
       cursor: pointer;
       background: linear-gradient(145deg,#ff4d8d,#ff1e65);
-      box-shadow: 0 35px 90px rgba(0,0,0,0.65);
+      box-shadow: 0 25px 70px rgba(255,80,150,0.35);
       display: flex;
       justify-content: center;
       align-items: center;
       font-size: 28px;
       transition: 0.35s ease;
+      color: white;
     }
 
     .envelope:hover {
       transform: scale(1.06);
     }
 
-    /* 🎬 Landscape Video Hero */
+    /* Video Hero */
     .videoHero {
       width: min(92vw, 900px);
       aspect-ratio: 16 / 9;
@@ -81,12 +99,12 @@
       margin-top: 35px;
       position: relative;
 
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(255,255,255,0.6);
 
       box-shadow:
-        0 40px 120px rgba(0,0,0,0.75),
-        0 0 60px rgba(255,80,150,0.15);
+        0 25px 80px rgba(0,0,0,0.18),
+        0 0 50px rgba(255,80,150,0.18);
 
       backdrop-filter: blur(18px);
     }
@@ -95,7 +113,6 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      background: black;
     }
 
     /* Overlay Buttons */
@@ -108,39 +125,35 @@
       cursor: pointer;
       font-size: 14px;
       color: white;
-      background: rgba(255,255,255,0.12);
+      background: rgba(0,0,0,0.45);
       backdrop-filter: blur(15px);
       transition: 0.3s;
     }
 
     .overlayBtn:hover {
-      background: rgba(255,255,255,0.25);
+      background: rgba(0,0,0,0.65);
       transform: scale(1.05);
     }
 
-    #skipBtn {
-      right: 18px;
-    }
-
-    #pauseBtn {
-      left: 18px;
-    }
+    #skipBtn { right: 18px; }
+    #pauseBtn { left: 18px; }
 
     /* Valentine Modal */
     .modal {
       margin-top: 30px;
       padding: 45px;
       border-radius: 30px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.65);
+      border: 1px solid rgba(255,255,255,0.75);
       backdrop-filter: blur(25px);
-      box-shadow: 0 35px 90px rgba(0,0,0,0.65);
+      box-shadow: 0 25px 70px rgba(0,0,0,0.15);
     }
 
     .modal h2 {
       font-family: "Playfair Display", serif;
       font-size: 2rem;
       margin-bottom: 18px;
+      color: #ff2f6d;
     }
 
     button {
@@ -156,7 +169,7 @@
     #yesBtn {
       background: linear-gradient(145deg,#ff4d8d,#ff1e65);
       color: white;
-      box-shadow: 0 0 30px rgba(255,80,150,0.35);
+      box-shadow: 0 0 25px rgba(255,80,150,0.35);
     }
 
     #yesBtn:hover {
@@ -166,11 +179,9 @@
     /* NO button slow dodge */
     #noBtn {
       position: absolute;
-      background: rgba(255,255,255,0.12);
-      color: white;
-
-      /* Smooth dragging movement */
-      transition: left 0.6s ease, top 0.6s ease;
+      background: rgba(0,0,0,0.15);
+      color: black;
+      transition: left 0.8s ease, top 0.8s ease;
     }
 
     /* Card Popup */
@@ -184,10 +195,10 @@
       width: min(420px, 85vw);
       border-radius: 26px;
       margin-top: 18px;
-      box-shadow: 0 25px 80px rgba(0,0,0,0.7);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
     }
 
-    /* Petal Confetti */
+    /* Petals */
     .petal {
       position: fixed;
       width: 12px;
@@ -206,14 +217,25 @@
 
 <body>
 
+  <!-- 💖 Slow Hearts Generator -->
+  <script>
+    for (let i = 0; i < 12; i++) {
+      let h = document.createElement("div");
+      h.className = "heart";
+      h.innerText = "💗";
+      h.style.left = Math.random() * 100 + "vw";
+      h.style.animationDuration = (15 + Math.random() * 10) + "s";
+      h.style.fontSize = (14 + Math.random() * 12) + "px";
+      document.body.appendChild(h);
+    }
+  </script>
+
   <!-- Screen 1 -->
   <div class="screen active" id="s1">
     <h1>Akshata</h1>
     <p>Tap the envelope. Something special is inside.</p>
 
-    <div class="envelope" onclick="start()">
-      💌
-    </div>
+    <div class="envelope" onclick="start()">💌</div>
   </div>
 
   <!-- Screen 2 -->
@@ -229,26 +251,21 @@
         <source src="video.mp4" type="video/mp4">
       </video>
 
-      <button class="overlayBtn" id="pauseBtn" onclick="togglePause()">
-        Pause ⏸
-      </button>
-
-      <button class="overlayBtn" id="skipBtn" onclick="goQuestion()">
-        Skip 💌
-      </button>
+      <button class="overlayBtn" id="pauseBtn" onclick="togglePause()">Pause ⏸</button>
+      <button class="overlayBtn" id="skipBtn" onclick="goQuestion()">Skip 💌</button>
     </div>
   </div>
 
   <!-- Screen 3 -->
   <div class="screen" id="s3">
     <div class="modal">
-      <h2>Will you be my Valentine Akshata 💖?</h2>
+      <h2>Will you be my Valentine, Akshata? 💖</h2>
 
       <button id="yesBtn" onclick="yes()">Yes 💖</button>
       <button id="noBtn" onmouseover="moveNo()">No 😭</button>
 
       <div id="cardPopup">
-        <h2>The free tiramisu awaits us ✨</h2>
+        <h2>Free tiramisu awaits us 🍰✨</h2>
         <img src="card.png">
         <p>See you soon, my Valentine.</p>
       </div>
@@ -264,18 +281,13 @@
     let video;
 
     function start() {
-      // Start music
-      let music = document.getElementById("music");
-      music.volume = 0.8;
-      music.play().catch(()=>{});
+      document.getElementById("music").play().catch(()=>{});
 
-      // Move to video screen
       document.getElementById("s1").classList.remove("active");
       document.getElementById("s2").classList.add("active");
 
       video = document.getElementById("vid");
       video.play();
-
       video.onended = goQuestion;
     }
 
@@ -293,14 +305,12 @@
 
     function goQuestion() {
       if(video) video.pause();
-
       document.getElementById("s2").classList.remove("active");
       document.getElementById("s3").classList.add("active");
     }
 
     function moveNo() {
       let no = document.getElementById("noBtn");
-
       no.style.left = Math.random() * (window.innerWidth - 140) + "px";
       no.style.top = Math.random() * (window.innerHeight - 90) + "px";
     }
@@ -311,15 +321,12 @@
     }
 
     function petals() {
-      for (let i = 0; i < 90; i++) {
+      for (let i = 0; i < 80; i++) {
         let p = document.createElement("div");
         p.className = "petal";
         p.style.left = Math.random() * window.innerWidth + "px";
-        p.style.background =
-          `rgba(255,180,210,${Math.random()})`;
-        p.style.animationDuration =
-          (2 + Math.random() * 3) + "s";
-
+        p.style.background = `rgba(255,180,210,${Math.random()})`;
+        p.style.animationDuration = (2 + Math.random() * 3) + "s";
         document.body.appendChild(p);
 
         setTimeout(() => p.remove(), 4000);
