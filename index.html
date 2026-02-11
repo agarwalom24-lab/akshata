@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>For Akshata</title>
 
-  <!-- Apple-style fonts -->
+  <!-- Premium Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
@@ -20,7 +20,7 @@
       text-align: center;
     }
 
-    /* Smooth screen transitions */
+    /* Screens */
     .screen {
       display: none;
       min-height: 100vh;
@@ -39,15 +39,17 @@
 
     h1 {
       font-family: "Playfair Display", serif;
-      font-size: 2.8rem;
+      font-size: 2.6rem;
       margin: 0;
       letter-spacing: 0.5px;
     }
 
     p {
-      margin-top: 12px;
-      opacity: 0.65;
+      margin-top: 14px;
+      opacity: 0.7;
       font-weight: 300;
+      font-size: 1rem;
+      max-width: 650px;
     }
 
     /* Envelope */
@@ -70,7 +72,7 @@
       transform: scale(1.06);
     }
 
-    /* 🎬 Landscape Cinematic Video Hero */
+    /* 🎬 Landscape Video Hero */
     .videoHero {
       width: min(92vw, 900px);
       aspect-ratio: 16 / 9;
@@ -92,31 +94,36 @@
     video {
       width: 100%;
       height: 100%;
-
-      /* FIX: No cropping for landscape */
-      object-fit: contain;
+      object-fit: cover;
       background: black;
     }
 
-    /* Skip button overlay */
-    .skipBtn {
+    /* Overlay Buttons */
+    .overlayBtn {
       position: absolute;
       top: 18px;
-      right: 18px;
       padding: 10px 18px;
       border-radius: 25px;
       border: none;
       cursor: pointer;
       font-size: 14px;
       color: white;
-      background: rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.12);
       backdrop-filter: blur(15px);
       transition: 0.3s;
     }
 
-    .skipBtn:hover {
-      background: rgba(255,255,255,0.22);
+    .overlayBtn:hover {
+      background: rgba(255,255,255,0.25);
       transform: scale(1.05);
+    }
+
+    #skipBtn {
+      right: 18px;
+    }
+
+    #pauseBtn {
+      left: 18px;
     }
 
     /* Valentine Modal */
@@ -127,13 +134,12 @@
       background: rgba(255,255,255,0.06);
       border: 1px solid rgba(255,255,255,0.14);
       backdrop-filter: blur(25px);
-
       box-shadow: 0 35px 90px rgba(0,0,0,0.65);
     }
 
     .modal h2 {
       font-family: "Playfair Display", serif;
-      font-size: 2.1rem;
+      font-size: 2rem;
       margin-bottom: 18px;
     }
 
@@ -157,10 +163,14 @@
       transform: scale(1.08);
     }
 
+    /* NO button slow dodge */
     #noBtn {
       position: absolute;
       background: rgba(255,255,255,0.12);
       color: white;
+
+      /* Smooth dragging movement */
+      transition: left 0.6s ease, top 0.6s ease;
     }
 
     /* Card Popup */
@@ -208,15 +218,24 @@
 
   <!-- Screen 2 -->
   <div class="screen" id="s2">
-    <h1>A small film</h1>
-    <p>Just us, in moments.</p>
+    <h1>The cutest documentary 💖</h1>
+    <p>
+      About a strong, little independent woman 💖  
+      and the main character of my life 😭
+    </p>
 
     <div class="videoHero">
       <video id="vid">
         <source src="video.mp4" type="video/mp4">
       </video>
 
-      <button class="skipBtn" onclick="goQuestion()">Skip</button>
+      <button class="overlayBtn" id="pauseBtn" onclick="togglePause()">
+        Pause ⏸
+      </button>
+
+      <button class="overlayBtn" id="skipBtn" onclick="goQuestion()">
+        Skip 💌
+      </button>
     </div>
   </div>
 
@@ -245,20 +264,31 @@
     let video;
 
     function start() {
-      // Start music softly
+      // Start music
       let music = document.getElementById("music");
       music.volume = 0.8;
       music.play().catch(()=>{});
 
-      // Move to video
+      // Move to video screen
       document.getElementById("s1").classList.remove("active");
       document.getElementById("s2").classList.add("active");
 
       video = document.getElementById("vid");
       video.play();
 
-      // Auto next screen
       video.onended = goQuestion;
+    }
+
+    function togglePause() {
+      let btn = document.getElementById("pauseBtn");
+
+      if (video.paused) {
+        video.play();
+        btn.innerText = "Pause ⏸";
+      } else {
+        video.pause();
+        btn.innerText = "Play ▶";
+      }
     }
 
     function goQuestion() {
@@ -270,6 +300,7 @@
 
     function moveNo() {
       let no = document.getElementById("noBtn");
+
       no.style.left = Math.random() * (window.innerWidth - 140) + "px";
       no.style.top = Math.random() * (window.innerHeight - 90) + "px";
     }
