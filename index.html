@@ -5,37 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>For Akshata</title>
 
-  <!-- Premium Fonts -->
+  <!-- Apple-style fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
   <style>
     body {
       margin: 0;
       font-family: "Inter", sans-serif;
-      background: radial-gradient(circle at top, #0b0b12, #050508);
+      background: radial-gradient(circle at top, #12121a, #050508);
       color: white;
       overflow: hidden;
+      text-align: center;
     }
 
-    /* Soft glowing particles */
-    .glow {
-      position: absolute;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: rgba(255, 200, 220, 0.4);
-      filter: blur(2px);
-      animation: float 10s infinite linear;
-    }
-
-    @keyframes float {
-      from { transform: translateY(110vh); }
-      to   { transform: translateY(-20vh); }
-    }
-
-    /* Screens */
+    /* Smooth screen transitions */
     .screen {
       display: none;
       min-height: 100vh;
@@ -43,13 +28,9 @@
       align-items: center;
       flex-direction: column;
       padding: 50px;
-      text-align: center;
       animation: fadeUp 1.2s ease;
     }
-
-    .active {
-      display: flex;
-    }
+    .active { display: flex; }
 
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(25px); }
@@ -60,75 +41,64 @@
       font-family: "Playfair Display", serif;
       font-size: 2.8rem;
       margin: 0;
-      letter-spacing: 1px;
+      letter-spacing: 0.5px;
     }
 
     p {
-      font-weight: 300;
-      opacity: 0.75;
       margin-top: 12px;
+      opacity: 0.65;
+      font-weight: 300;
     }
 
     /* Envelope */
     .envelope {
-      margin-top: 50px;
       width: 360px;
       height: 230px;
-      border-radius: 22px;
-      background: linear-gradient(145deg, #1a1a2e, #0d0d16);
-      border: 1px solid rgba(255,255,255,0.12);
-      box-shadow: 0 25px 70px rgba(0,0,0,0.6);
+      margin-top: 45px;
+      border-radius: 24px;
       cursor: pointer;
-      position: relative;
-      transition: transform 0.4s ease;
-    }
-
-    .envelope:hover {
-      transform: scale(1.05);
-    }
-
-    .seal {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 65px;
-      height: 65px;
-      border-radius: 50%;
-      background: radial-gradient(circle, #ffb6c9, #ff3b7b);
-      box-shadow: 0 0 25px rgba(255, 80, 140, 0.6);
+      background: linear-gradient(145deg,#ff4d8d,#ff1e65);
+      box-shadow: 0 35px 90px rgba(0,0,0,0.65);
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 22px;
-      font-family: "Playfair Display", serif;
+      font-size: 28px;
+      transition: 0.35s ease;
     }
 
-    /* Video Hero */
+    .envelope:hover {
+      transform: scale(1.06);
+    }
+
+    /* 🎬 Landscape Cinematic Video Hero */
     .videoHero {
-      width: min(92vw, 520px);
-      aspect-ratio: 9 / 16;
-      border-radius: 35px;
+      width: min(92vw, 900px);
+      aspect-ratio: 16 / 9;
+      border-radius: 32px;
       overflow: hidden;
       margin-top: 35px;
       position: relative;
 
-      box-shadow:
-        0 35px 90px rgba(0,0,0,0.7),
-        0 0 55px rgba(255,80,150,0.18);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.14);
 
-      border: 1px solid rgba(255,255,255,0.15);
-      background: rgba(255,255,255,0.05);
-      backdrop-filter: blur(20px);
+      box-shadow:
+        0 40px 120px rgba(0,0,0,0.75),
+        0 0 60px rgba(255,80,150,0.15);
+
+      backdrop-filter: blur(18px);
     }
 
     video {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+
+      /* FIX: No cropping for landscape */
+      object-fit: contain;
+      background: black;
     }
 
-    /* Skip button */
+    /* Skip button overlay */
     .skipBtn {
       position: absolute;
       top: 18px;
@@ -136,49 +106,51 @@
       padding: 10px 18px;
       border-radius: 25px;
       border: none;
-      background: rgba(255,255,255,0.12);
-      color: white;
       cursor: pointer;
       font-size: 14px;
+      color: white;
+      background: rgba(255,255,255,0.10);
+      backdrop-filter: blur(15px);
       transition: 0.3s;
     }
 
     .skipBtn:hover {
-      background: rgba(255,255,255,0.25);
+      background: rgba(255,255,255,0.22);
       transform: scale(1.05);
     }
 
-    /* Modal Valentine Question */
+    /* Valentine Modal */
     .modal {
-      margin-top: 40px;
-      padding: 35px;
-      border-radius: 28px;
+      margin-top: 30px;
+      padding: 45px;
+      border-radius: 30px;
       background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.14);
       backdrop-filter: blur(25px);
-      box-shadow: 0 25px 70px rgba(0,0,0,0.55);
+
+      box-shadow: 0 35px 90px rgba(0,0,0,0.65);
     }
 
     .modal h2 {
       font-family: "Playfair Display", serif;
-      font-size: 2rem;
-      margin-bottom: 15px;
+      font-size: 2.1rem;
+      margin-bottom: 18px;
     }
 
     button {
-      padding: 14px 28px;
       border: none;
+      padding: 14px 30px;
       border-radius: 30px;
       cursor: pointer;
-      font-size: 15px;
       margin: 12px;
+      font-size: 15px;
       transition: 0.3s ease;
     }
 
     #yesBtn {
-      background: linear-gradient(145deg, #ff4d8d, #ff1e65);
+      background: linear-gradient(145deg,#ff4d8d,#ff1e65);
       color: white;
-      box-shadow: 0 0 25px rgba(255,80,150,0.35);
+      box-shadow: 0 0 30px rgba(255,80,150,0.35);
     }
 
     #yesBtn:hover {
@@ -186,89 +158,77 @@
     }
 
     #noBtn {
+      position: absolute;
       background: rgba(255,255,255,0.12);
       color: white;
-      position: absolute;
     }
 
-    /* Card popup */
-    .cardPopup {
+    /* Card Popup */
+    #cardPopup {
       display: none;
       margin-top: 25px;
       animation: fadeUp 0.9s ease;
     }
 
-    .cardPopup img {
-      width: min(360px, 85vw);
-      border-radius: 25px;
+    #cardPopup img {
+      width: min(420px, 85vw);
+      border-radius: 26px;
       margin-top: 18px;
-      box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+      box-shadow: 0 25px 80px rgba(0,0,0,0.7);
     }
 
-    /* Confetti petals */
+    /* Petal Confetti */
     .petal {
       position: fixed;
       width: 12px;
       height: 12px;
       border-radius: 50%;
       top: -10px;
+      opacity: 0.75;
       animation: fall 4s linear forwards;
-      opacity: 0.8;
     }
 
     @keyframes fall {
-      to {
-        transform: translateY(110vh) rotate(720deg);
-      }
+      to { transform: translateY(110vh) rotate(720deg); }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- Glow particles -->
-  <script>
-    for (let i = 0; i < 25; i++) {
-      let g = document.createElement("div");
-      g.className = "glow";
-      g.style.left = Math.random() * 100 + "vw";
-      g.style.animationDuration = (7 + Math.random() * 6) + "s";
-      document.body.appendChild(g);
-    }
-  </script>
-
   <!-- Screen 1 -->
-  <div class="screen active" id="screen1">
+  <div class="screen active" id="s1">
     <h1>Akshata</h1>
-    <p>Tap to open something meant only for you.</p>
+    <p>Tap the envelope. Something special is inside.</p>
 
-    <div class="envelope" onclick="startExperience()">
-      <div class="seal">A</div>
+    <div class="envelope" onclick="start()">
+      💌
     </div>
   </div>
 
   <!-- Screen 2 -->
-  <div class="screen" id="screen2">
+  <div class="screen" id="s2">
     <h1>A small film</h1>
     <p>Just us, in moments.</p>
 
     <div class="videoHero">
-      <video id="montageVideo">
+      <video id="vid">
         <source src="video.mp4" type="video/mp4">
       </video>
-      <button class="skipBtn" onclick="skipVideo()">Skip</button>
+
+      <button class="skipBtn" onclick="goQuestion()">Skip</button>
     </div>
   </div>
 
   <!-- Screen 3 -->
-  <div class="screen" id="screen3">
+  <div class="screen" id="s3">
     <div class="modal">
       <h2>Will you be my Valentine?</h2>
 
-      <button id="yesBtn" onclick="yesClick()">Yes</button>
+      <button id="yesBtn" onclick="yes()">Yes 💖</button>
       <button id="noBtn" onmouseover="moveNo()">No</button>
 
-      <div class="cardPopup" id="cardPopup">
+      <div id="cardPopup">
         <h2>She said yes ✨</h2>
         <img src="card.png">
         <p>See you soon, my Valentine.</p>
@@ -277,54 +237,58 @@
   </div>
 
   <!-- Music -->
-  <audio id="bgMusic">
+  <audio id="music">
     <source src="song.mp3" type="audio/mpeg">
   </audio>
 
   <script>
     let video;
 
-    function startExperience() {
-      let music = document.getElementById("bgMusic");
+    function start() {
+      // Start music softly
+      let music = document.getElementById("music");
       music.volume = 0.8;
-      music.play().catch(() => {});
+      music.play().catch(()=>{});
 
-      document.getElementById("screen1").classList.remove("active");
-      document.getElementById("screen2").classList.add("active");
+      // Move to video
+      document.getElementById("s1").classList.remove("active");
+      document.getElementById("s2").classList.add("active");
 
-      video = document.getElementById("montageVideo");
+      video = document.getElementById("vid");
       video.play();
-      video.onended = () => goToQuestion();
+
+      // Auto next screen
+      video.onended = goQuestion;
     }
 
-    function skipVideo() {
-      goToQuestion();
-    }
+    function goQuestion() {
+      if(video) video.pause();
 
-    function goToQuestion() {
-      if (video) video.pause();
-      document.getElementById("screen2").classList.remove("active");
-      document.getElementById("screen3").classList.add("active");
+      document.getElementById("s2").classList.remove("active");
+      document.getElementById("s3").classList.add("active");
     }
 
     function moveNo() {
-      const noBtn = document.getElementById("noBtn");
-      noBtn.style.left = Math.random() * (window.innerWidth - 120) + "px";
-      noBtn.style.top = Math.random() * (window.innerHeight - 80) + "px";
+      let no = document.getElementById("noBtn");
+      no.style.left = Math.random() * (window.innerWidth - 140) + "px";
+      no.style.top = Math.random() * (window.innerHeight - 90) + "px";
     }
 
-    function yesClick() {
+    function yes() {
       document.getElementById("cardPopup").style.display = "block";
       petals();
     }
 
     function petals() {
-      for (let i = 0; i < 80; i++) {
+      for (let i = 0; i < 90; i++) {
         let p = document.createElement("div");
         p.className = "petal";
         p.style.left = Math.random() * window.innerWidth + "px";
-        p.style.background = `rgba(255,180,210,${Math.random()})`;
-        p.style.animationDuration = (2 + Math.random() * 3) + "s";
+        p.style.background =
+          `rgba(255,180,210,${Math.random()})`;
+        p.style.animationDuration =
+          (2 + Math.random() * 3) + "s";
+
         document.body.appendChild(p);
 
         setTimeout(() => p.remove(), 4000);
