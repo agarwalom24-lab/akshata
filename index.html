@@ -66,7 +66,18 @@
       display: block;
     }
 
-    /* Buttons */
+    /* Skip Button */
+    #skipBtn {
+      margin-top: 20px;
+      background: #444;
+      color: white;
+      padding: 10px 18px;
+      border-radius: 15px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    /* Valentine Buttons */
     button {
       padding: 12px 22px;
       border: none;
@@ -143,6 +154,9 @@
         <source src="video.mp4" type="video/mp4">
       </video>
     </div>
+
+    <!-- Skip Option -->
+    <button id="skipBtn" onclick="skipVideo()">Skip 💌</button>
   </div>
 
   <!-- Screen 3: Valentine Question -->
@@ -166,6 +180,8 @@
   </audio>
 
   <script>
+    let video;
+
     function startExperience() {
 
       // Start music
@@ -180,14 +196,28 @@
       document.getElementById("screen2").classList.add("active");
 
       // Play video
-      let video = document.getElementById("montageVideo");
+      video = document.getElementById("montageVideo");
       video.play();
 
-      // After video ends → show Valentine question
+      // When video ends → show Valentine question
       video.onended = () => {
-        document.getElementById("screen2").classList.remove("active");
-        document.getElementById("screen3").classList.add("active");
+        goToQuestion();
       };
+    }
+
+    // Skip button function
+    function skipVideo() {
+      goToQuestion();
+    }
+
+    // Common transition function
+    function goToQuestion() {
+      if (video) {
+        video.pause();
+      }
+
+      document.getElementById("screen2").classList.remove("active");
+      document.getElementById("screen3").classList.add("active");
     }
 
     // No button dodges
